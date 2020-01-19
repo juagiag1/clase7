@@ -1,3 +1,8 @@
+<?php
+  session_start();
+ include('./librerias/conexion.php');
+ if (isset($_SESSION['user_id'])) {
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -31,24 +36,36 @@
   <div style="margin-top: 20px;"></div>
   <div class="col-md-4 col-md-offset-4">
     <h2 class="text-center">Datos personales</h2>
-
+    <?php  
+    $sql = "SELECT * FROM users WHERE id = '".$_SESSION['user_id']."' ";
+    $result = mysqli_query($link,$sql);
+    while($row = mysqli_fetch_array($result)){
+    ?>
     <form action="#" method="POST">
       <div class="form-group">
         <label for="name">Nombre:</label>
-        <input type="text" class="form-control"  name="name" value="prueba">
+        <input type="text" class="form-control"  name="name" value="<?=$row['name']?>">
       </div>
       <div class="form-group">
         <label for="email">Email:</label>
-        <input type="email" class="form-control"   name="email" value="prueba@mail.com">
+        <input type="email" class="form-control"   name="email" value="<?=$row['email']?>">
       </div>
       <div class="form-group">
         <label for="password">Contraseña:</label>
-        <input type="password" class="form-control"  name="password" value="123">
+        <input type="password" class="form-control"  name="password" value="<?=$row['password']?>">
       </div>
     </form>
-
+    <?php  
+    }
+    ?>
   </div>
 </div>
 
 </body>
 </html>
+<?php 
+ }
+ else{
+  header('Location:./index.php');
+ }
+?>

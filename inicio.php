@@ -1,3 +1,8 @@
+<?php
+  session_start();
+ include('./librerias/conexion.php');
+ if (isset($_SESSION['user_id'])) {
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -29,3 +34,9 @@
 
 </body>
 </html>
+<?php 
+ }
+ else{
+  header('Location:./index.php');
+ }
+?>
